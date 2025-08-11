@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*'
+  release:
+    types: [published]
   workflow_dispatch:
 
 jobs:
@@ -57,14 +59,41 @@ jobs:
         with:
           path: artifacts
 
+      - name: List downloaded files
+        run: |
+          echo "=== Downloaded artifacts ==="
+          find artifacts -type f -name "*" | head -20
+          echo "=== Mac artifacts ==="
+          ls -la artifacts/video-optimizer-mac/build/ || echo "No mac artifacts"
+          echo "=== Win artifacts ==="
+          ls -la artifacts/video-optimizer-win/build/ || echo "No win artifacts"
+          echo "=== Linux artifacts ==="
+          ls -la artifacts/video-optimizer-linux/build/ || echo "No linux artifacts"
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/video-optimizer-mac/build/**/*
-            artifacts/video-optimizer-linux/build/**/*
-            artifacts/video-optimizer-win/build/**/*
+            artifacts/video-optimizer-mac/build/*.dmg
+            artifacts/video-optimizer-mac/build/*.zip
+            artifacts/video-optimizer-linux/build/*.AppImage
+            artifacts/video-optimizer-linux/build/*.zip
+            artifacts/video-optimizer-win/build/*.exe
+            artifacts/video-optimizer-win/build/*.zip
           draft: false
           prerelease: false
+          generate_release_notes: true
+          body: |
+            ## Что нового в версии ${{ github.ref_name }}
+            
+            ### Скачивания
+            - **macOS**: DMG файл для установки
+            - **Windows**: EXE установщик
+            - **Linux**: AppImage (портативная версия)
+            
+            ### Системные требования
+            - macOS 10.14+
+            - Windows 10+
+            - Linux (Ubuntu 18.04+, Fedora 28+)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

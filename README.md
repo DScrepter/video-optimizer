@@ -53,6 +53,16 @@ git push origin v1.0.0
 
 Готовые файлы будут доступны в GitHub Releases.
 
+## Скачивания
+
+### Последняя версия
+Скачать последнюю версию: [GitHub Releases](https://github.com/username/video-optimizer/releases/latest)
+
+### Поддерживаемые платформы
+- **macOS**: `.dmg` файл (10.14+)
+- **Windows**: `.exe` установщик (Windows 10+)
+- **Linux**: `.AppImage` (Ubuntu 18.04+, Fedora 28+)
+
 ## Структура проекта
 
 - `main.js` - основной процесс Electron
