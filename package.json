@@ -1,0 +1,56 @@
+{
+	"name": "video-optimizer",
+	"version": "1.0.0",
+	"main": "main.js",
+	"scripts": {
+		"start": "electron .",
+		"dist": "electron-builder",
+		"build:win": "electron-builder --win",
+		"build:mac": "electron-builder --mac",
+		"build:linux": "electron-builder --linux",
+		"build:all": "npm run build:win && npm run build:mac && npm run build:linux"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"description": "",
+	"dependencies": {
+		"ffmpeg-static": "^5.2.0"
+	},
+	"devDependencies": {
+		"electron": "^37.2.6",
+		"electron-builder": "^23.6.0"
+	},
+	"build": {
+		"appId": "com.screpter.videooptimizer",
+		"productName": "Video Optimizer",
+		"asar": false,
+		"directories": {
+			"output": "build"
+		},
+		"extraResources": [
+			{
+				"from": "node_modules/ffmpeg-static",
+				"to": "ffmpeg-static"
+			}
+		],
+		"mac": {
+			"target": [
+				"dmg",
+				"zip"
+			],
+			"category": "public.app-category.video"
+		},
+		"win": {
+			"target": [
+				"nsis",
+				"zip"
+			]
+		},
+		"nsis": {
+			"oneClick": false,
+			"allowToChangeInstallationDirectory": true
+		}
+	}
+}

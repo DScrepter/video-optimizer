@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Видео оптимизатор</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			padding: 20px;
+			max-width: 700px;
+			margin: auto;
+		}
+
+		button {
+			font-size: 1.1em;
+			padding: 10px 20px;
+			margin: 10px 0;
+		}
+
+		progress {
+			width: 100%;
+			height: 20px;
+			margin: 10px 0;
+		}
+
+		pre {
+			background: #f0f0f0;
+			padding: 10px;
+			height: 140px;
+			overflow-y: auto;
+			white-space: pre-wrap;
+		}
+
+		label {
+			display: block;
+			margin-top: 10px;
+		}
+
+		input[type=number] {
+			width: 60px;
+			margin-left: 5px;
+		}
+
+		.controls {
+			margin-bottom: 15px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Оптимизация видео</h1>
+	<p><i>Простая утилита оптимизации видео для вставки на сайт в качестве фона</i></p>
+
+	<p>Поддерживаемые форматы: <b>mp4, mov, avi, mkv, webm</b>.</p>
+	<p>После обработки в папке с исходным видео появятся:</p>
+	<ul>
+		<li>WebM и MP4 версии для десктопа (720p по умолчанию)</li>
+		<li>WebM и MP4 версии для мобильных устройств (480p по умолчанию)</li>
+		<li>Постер (poster.webp)</li>
+		<li>HTML-файл с тегом video для вставки на сайт</li>
+	</ul>
+
+	<div class="controls">
+		<label>Качество WebM (CRF): <input id="webmCRF" type="number" min="10" max="63" value="32"></label>
+		<label>Качество MP4 (CRF): <input id="mp4CRF" type="number" min="0" max="51" value="28"></label>
+		<label>Высота десктопной версии (px): <input id="desktopHeight" type="number" min="240" max="1080" value="720"></label>
+		<label>Высота мобильной версии (px): <input id="mobileHeight" type="number" min="120" max="720" value="480"></label>
+	</div>
+
+	<button id="select">Выбрать видео</button>
+	<button id="cancel" disabled>Отмена</button>
+
+	<p id="status"></p>
+	<progress id="progress" max="100" value="0"></progress>
+	<pre id="log"></pre>
+
+	<script src="renderer.js"></script>
+</body>
+
+</html>
