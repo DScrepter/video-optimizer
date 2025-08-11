@@ -8,6 +8,10 @@ on:
     types: [published]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -61,25 +65,33 @@ jobs:
 
       - name: List downloaded files
         run: |
-          echo "=== Downloaded artifacts ==="
-          find artifacts -type f -name "*" | head -20
+          echo "=== Downloaded artifacts structure ==="
+          find artifacts -type f | sort
+          echo ""
           echo "=== Mac artifacts ==="
-          ls -la artifacts/video-optimizer-mac/build/ || echo "No mac artifacts"
+          ls -la artifacts/video-optimizer-mac/ || echo "No mac artifacts"
+          echo ""
           echo "=== Win artifacts ==="
-          ls -la artifacts/video-optimizer-win/build/ || echo "No win artifacts"
+          ls -la artifacts/video-optimizer-win/ || echo "No win artifacts"
+          echo ""
           echo "=== Linux artifacts ==="
-          ls -la artifacts/video-optimizer-linux/build/ || echo "No linux artifacts"
+          ls -la artifacts/video-optimizer-linux/ || echo "No linux artifacts"
 
+      - name: Find and upload release files
+        run: |
+          echo "Finding release files..."
+          find artifacts -name "*.dmg" -o -name "*.zip" -o -name "*.exe" -o -name "*.AppImage" | while read file; do
+            echo "Found: $file"
+          done
+          
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/video-optimizer-mac/build/*.dmg
-            artifacts/video-optimizer-mac/build/*.zip
-            artifacts/video-optimizer-linux/build/*.AppImage
-            artifacts/video-optimizer-linux/build/*.zip
-            artifacts/video-optimizer-win/build/*.exe
-            artifacts/video-optimizer-win/build/*.zip
+            artifacts/**/*.dmg
+            artifacts/**/*.zip
+            artifacts/**/*.exe
+            artifacts/**/*.AppImage
           draft: false
           prerelease: false
           generate_release_notes: true
@@ -97,3 +109,4 @@ jobs:
             - Linux (Ubuntu 18.04+, Fedora 28+)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          permissions: write
