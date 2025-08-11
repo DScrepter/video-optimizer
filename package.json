@@ -40,7 +40,11 @@
 				"dmg",
 				"zip"
 			],
-			"category": "public.app-category.video"
+			"category": "public.app-category.video",
+			"hardenedRuntime": true,
+			"gatekeeperAssess": false,
+			"entitlements": "build/entitlements.mac.plist",
+			"entitlementsInherit": "build/entitlements.mac.plist"
 		},
 		"win": {
 			"target": [
