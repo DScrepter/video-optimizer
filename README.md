@@ -56,12 +56,14 @@ git push origin v1.0.0
 ## Скачивания
 
 ### Последняя версия
-Скачать последнюю версию: [GitHub Releases](https://github.com/username/video-optimizer/releases/latest)
+Скачать последнюю версию: [GitHub Releases](https://github.com/[ТВОЙ_USERNAME]/video-optimizer/releases/latest)
 
-### Быстрые ссылки
-- **macOS**: [DMG установщик](https://github.com/username/video-optimizer/releases/latest/download/Video.Optimizer-1.0.0-arm64.dmg)
-- **Windows**: [EXE установщик](https://github.com/username/video-optimizer/releases/latest/download/Video.Optimizer.Setup.1.0.0.exe)
-- **Linux**: [AppImage](https://github.com/username/video-optimizer/releases/latest/download/Video.Optimizer-1.0.0.AppImage)
+### Быстрые ссылки (v1.0.2)
+- **macOS**: [DMG установщик](https://github.com/[ТВОЙ_USERNAME]/video-optimizer/releases/download/v1.0.2/Video.Optimizer-1.0.0-arm64.dmg)
+- **Windows**: [EXE установщик](https://github.com/[ТВОЙ_USERNAME]/video-optimizer/releases/download/v1.0.2/Video.Optimizer.Setup.1.0.0.exe)
+- **Linux**: [AppImage](https://github.com/[ТВОЙ_USERNAME]/video-optimizer/releases/download/v1.0.2/Video.Optimizer-1.0.0.AppImage)
+
+**Примечание:** Замени `[ТВОЙ_USERNAME]` на реальное имя пользователя GitHub
 
 ### Поддерживаемые платформы
 - **macOS**: `.dmg` файл (10.14+, Apple Silicon + Intel)

@@ -112,17 +112,18 @@ ipcMain.handle('optimize-video', async (event, inputPath, options) => {
 	// Копируем оригинал в temp, чтобы избежать проблем с кодеками
 	await runFfmpeg(['-y', '-i', inputPath, '-c', 'copy', tempFile], () => { });
 
-	async function convertVideo(height, suffix, webmCRF, mp4CRF) {
+	async function convertVideo(height, suffix, webmCRF, mp4CRF, removeAudio) {
 		const webmFile = path.join(outDir, `${baseName}_${suffix}.webm`);
 		const mp4File = path.join(outDir, `${baseName}_${suffix}.mp4`);
 
 		const scaleFilter = `scale=trunc(oh*a/2)*2:${height},fps=24`;
+		const audioArgs = removeAudio ? ['-an'] : [];
 
 		// WebM
 		await runFfmpeg([
 			'-y', '-i', tempFile,
 			'-vf', scaleFilter,
-			'-an',
+			...audioArgs,
 			'-c:v', 'libvpx-vp9',
 			'-b:v', '0',
 			'-crf', webmCRF.toString(),
@@ -135,7 +136,7 @@ ipcMain.handle('optimize-video', async (event, inputPath, options) => {
 		await runFfmpeg([
 			'-y', '-i', tempFile,
 			'-vf', scaleFilter,
-			'-an',
+			...audioArgs,
 			'-c:v', 'libx264',
 			'-preset', 'veryslow',
 			'-crf', mp4CRF.toString(),
@@ -147,8 +148,8 @@ ipcMain.handle('optimize-video', async (event, inputPath, options) => {
 	}
 
 	// Запускаем конвертацию с параметрами из options или по умолчанию
-	await convertVideo(options.desktopHeight || 720, 'desktop', options.webmCRF || 32, options.mp4CRF || 28);
-	await convertVideo(options.mobileHeight || 480, 'mobile', options.webmCRF || 32, options.mp4CRF || 28);
+	await convertVideo(options.desktopHeight || 720, 'desktop', options.webmCRF || 32, options.mp4CRF || 28, options.removeAudio);
+	await convertVideo(options.mobileHeight || 480, 'mobile', options.webmCRF || 32, options.mp4CRF || 28, options.removeAudio);
 
 	// Постер
 	const posterFile = path.join(outDir, 'poster.webp');

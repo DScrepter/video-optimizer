@@ -8,6 +8,7 @@ const webmCRFInput = document.getElementById('webmCRF');
 const mp4CRFInput = document.getElementById('mp4CRF');
 const desktopHeightInput = document.getElementById('desktopHeight');
 const mobileHeightInput = document.getElementById('mobileHeight');
+const removeAudioInput = document.getElementById('removeAudio');
 
 let videoDuration = 0;
 let optimizing = false;
@@ -35,6 +36,7 @@ selectBtn.addEventListener('click', async () => {
 		mp4CRF: Number(mp4CRFInput.value) || 28,
 		desktopHeight: Number(desktopHeightInput.value) || 720,
 		mobileHeight: Number(mobileHeightInput.value) || 480,
+		removeAudio: removeAudioInput.checked,
 	};
 
 	try {
